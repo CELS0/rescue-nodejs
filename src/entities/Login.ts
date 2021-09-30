@@ -6,7 +6,7 @@ class Login {
     readonly id: number;
     
     @Column()
-    Login: string;
+    login: string;
 
     @Column()
     password: string;
