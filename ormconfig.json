@@ -1,0 +1,19 @@
+
+{
+    "type": "postgres",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "username": "postgres",
+    "password": "12345678",
+    "database": "refreshToken",
+    "migrations": [
+        "src/database/migrations/*.ts"
+    ],
+    "entities": [
+        "src/entities/*.ts"
+    ],
+    "cli": {
+        "migrationsDir": "src/database/migrations",
+        "entitiesDir": "src/entities"
+    }
+}
