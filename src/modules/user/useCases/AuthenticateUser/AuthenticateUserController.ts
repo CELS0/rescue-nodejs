@@ -1,29 +1,31 @@
+import { Request, Response } from 'express';
 import { AccessesRepository } from "../../infra/typeorm/repositories/AccessesRepository";
 import { AccessesUseCase } from "../createAccessUser/AccessesUseCase";
+import { AuthenteUserUseCase } from "./AuthenticateUserUseCase";
 
 let accessesRepository: AccessesRepository;
-let accessesUseCase: AccessesUseCase
+let authenteUserUseCase: AuthenteUserUseCase;
 
 class AuthenticateUserController {
-    constructor(){
+    constructor() {
         accessesRepository = new AccessesRepository();
-        accessesUseCase = new  AccessesUseCase(accessesRepository);
+        authenteUserUseCase = new AuthenteUserUseCase(accessesRepository);
     }
-async handle(req: Request, res: Response) {
-    try {
-        const data = {
-            email: req.body.email,
-            password: req.body.password,
+    async handle(req: Request, res: Response) {
+        try {
+            const data = {
+                email: req.body.email,
+                password: req.body.password,
+            }
+            const token = await authenteUserUseCase.logar(data);
+            return res.status(201).json(token);
         }
-        await accessesUseCase.create(data);
-        return res.status(201).json('ok');
+        catch (err) {
+            return res.status(500).json({
+                message: err.message
+            })
+        }
     }
-    catch (err) {
-        return res.status(500).json({
-            message: err.message
-        })
-    }
-}
 }
 
 export { AuthenticateUserController }

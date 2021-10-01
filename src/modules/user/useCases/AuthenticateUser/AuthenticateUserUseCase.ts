@@ -23,6 +23,8 @@ class AuthenteUserUseCase {
             throw new Error("User or password incorrect")
         }
         const token = generateToken.execute((userExist.id).toString());
+
+        return token;
     }
 }
 
