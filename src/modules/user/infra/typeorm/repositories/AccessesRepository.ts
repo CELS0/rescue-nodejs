@@ -6,14 +6,11 @@ import { Access } from "../entities/Access";
 
 @EntityRepository(Access)
 class AccessesRepository extends Repository<Access> implements IAccessesRepository {
-    async findByEmail(email: string): Promise<void> {
+    async findByEmail(email: string): Promise<Access> {
         const connection = await DBManager.getConnection();
         const repository = connection.getCustomRepository(AccessesRepository);
-        const userExist = await repository.findOne({email});
-        if (userExist) {
-            throw new Error('Usuário ou senha incorreta')
-        }
-
+        const userExist = await repository.findOne({ email });
+        return userExist;
     }
     async store(data: IAccessDTO): Promise<void> {
         const connection = await DBManager.getConnection();

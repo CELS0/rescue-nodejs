@@ -9,15 +9,16 @@ class AccessesUseCase {
         this.accessesRepository = accessesRepository;
     }
     async create(data: IAccessDTO): Promise<void> {
-        console.log("passei aqui", data);
-
-        await this.accessesRepository.findByEmail(data.email);
-
-        const newData = {
-            email: data.email,
-            password: await hash(data.password, 9)
+        const userExist = await this.accessesRepository.findByEmail(data.email);
+        if (!userExist) {
+            const newData = {
+                email: data.email,
+                password: await hash(data.password, 9)
+            }
+            await this.accessesRepository.store(newData)
+        } else {
+            throw new Error('Usuário já existe')
         }
-        await this.accessesRepository.store(newData)
     }
 }
 export { AccessesUseCase }
