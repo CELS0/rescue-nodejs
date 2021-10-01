@@ -1,12 +1,12 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('logins')
-class Login {
+@Entity('accesses')
+class Access {
     @PrimaryGeneratedColumn('increment')
     readonly id: number;
     
     @Column()
-    login: string;
+    email: string;
 
     @Column()
     password: string;
@@ -19,4 +19,4 @@ class Login {
     updatedAt: Date;
 
 }
-export { Login }
+export { Access }
