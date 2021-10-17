@@ -1,7 +1,7 @@
 import { IAccessDTO } from "../../dtos/IAccessDTO";
 import { IAccessesRepository } from "../../repositories/IAccessesRepository";
-import {compare} from 'bcryptjs'
-import { GenerateToken } from "../../../../provider/GenerateToken";
+import { compare } from 'bcryptjs'
+import { GenerateToken } from "../../../../provider/jwt/GenerateToken";
 
 class AuthenteUserUseCase {
     constructor(
@@ -9,13 +9,13 @@ class AuthenteUserUseCase {
     ) {
         this.accessesRepository = accessesRepository;
     }
-    
+
     async logar(data: IAccessDTO) {
         const generateToken = new GenerateToken();
         const userExist = await this.accessesRepository.findByEmail(data.email);
         if (!userExist) {
             throw new Error('User or password incorrect')
-        } 
+        }
 
         const passwordMatch = await compare(data.password, userExist.password);
 
