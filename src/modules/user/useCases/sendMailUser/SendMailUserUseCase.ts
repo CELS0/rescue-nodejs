@@ -5,18 +5,18 @@ class SendMailUserUseCase {
     constructor(
         private nodemailerProvider: INodemailerProvider,
     ) { }
-    async execute() {
+    async execute(name: string, email: string, subject: string, body: string) {
         await this.nodemailerProvider.sendMail({
             to: {
-                name: 'example',
-                email: 'example@gmail.com',
+                name,
+                email,
             },
             from: {
-                name: 'example',
-                email: 'example@example',
+                name: process.env.AWS_FROM_NAME,
+                email: process.env.AWS_FROM_EMAIL,
             },
-            subject: 'Seja bem-vindo à plataforma',
-            body: '<p>Você já pode fazer login em nossa plataforma.</p>'
+            subject,
+            body,
         });
     }
 }

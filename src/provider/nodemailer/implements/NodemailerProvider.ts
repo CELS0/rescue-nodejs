@@ -5,6 +5,7 @@ export class NodemailerProvider implements INodemailerProvider {
     private transporter: Mail;
   
     constructor() {
+      console.log(process.env.AWS_SES_HOST)
       this.transporter = nodemailer.createTransport({
         host: process.env.AWS_SES_HOST,
         port: 587,
@@ -16,7 +17,6 @@ export class NodemailerProvider implements INodemailerProvider {
     }
   
     async sendMail(message: IMessage): Promise<void> {
-      console.log(message.to.email)
       await this.transporter.sendMail({
         to: {
           name: message.to.name,
